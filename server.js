@@ -22,7 +22,7 @@ app.set('view engine', 'hbs');
 // Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressValidator()); // Add after body parser initialization!
+// app.use(expressValidator()); // Add after body parser initialization!
 
 // Method Override
 app.use(methodOverride('_method'));
