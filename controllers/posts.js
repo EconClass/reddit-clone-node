@@ -10,14 +10,15 @@ module.exports = app => {
             .catch(err => {
                 console.log(err.message);
             });
-    })
+    });
+
     //NEW
     app.get("/posts/new", (req, res) => {
-        res.render('posts-new');
+        res.render("posts-new.hbs");
     });
 
     // CREATE
-    app.post('/posts/new', (req, res) => {
+    app.post('/posts', (req, res) => {
     // INSTANTIATE INSTANCE OF POST MODEL
         const post = new Post(req.body);
 
