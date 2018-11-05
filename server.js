@@ -12,6 +12,7 @@ const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
 // const mongoose = require('mongoose');
+const expressValidator = require('express-validator');
 
 //=================================MIDDLEWARE=================================\\
 
@@ -22,10 +23,13 @@ app.set('view engine', 'hbs');
 // Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(expressValidator()); // Add after body parser initialization!
+app.use(expressValidator()); // Add after body parser initialization!
 
 // Method Override
 app.use(methodOverride('_method'));
+
+// Set db
+require('./data/reddit-db.js');
 
 //=================================CONTROLLERS=================================\\
 
