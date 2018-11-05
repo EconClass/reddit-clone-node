@@ -7,7 +7,7 @@ const exphbs = require('express-handlebars').create({
     partialsDir: path.join(__dirname, "views/partials"),
     defaultLayout: 'main',
     extname: 'hbs'
-  });
+});
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
