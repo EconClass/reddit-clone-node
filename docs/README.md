@@ -1,3 +1,3 @@
-# Headline
+# Reddit.js (Make School)
 
-> An awesome project.
+> Reddit clone written in Node
