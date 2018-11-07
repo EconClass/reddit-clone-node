@@ -1,1 +1,12 @@
-<h1>sfvkaslfvas</h1>
+
+<ul>
+    {{#each posts}}
+       <div class="card">
+           <div class="card-body">
+                <div class="card-title">{{this.title}}</div>
+                
+                <a href="{{this.url}}" target="_blank">{{this.url}}<a>
+            </div>
+        </div>
+    {{/each}}
+</ul>
