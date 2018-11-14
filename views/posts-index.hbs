@@ -3,7 +3,9 @@
     {{#each posts}}
        <div class="card">
            <div class="card-body">
-                <div class="card-title">{{this.title}}</div>
+                <div class="card-title">
+                    <a href="/posts/{{this._id}}">{{this.title}}</a>
+                </div>
                 
                 <a href="{{this.url}}" target="_blank">{{this.url}}<a>
             </div>
