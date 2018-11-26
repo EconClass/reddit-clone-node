@@ -11,7 +11,6 @@ const exphbs = require('express-handlebars').create({
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
-// const mongoose = require('mongoose');
 const expressValidator = require('express-validator');
 
 //=================================MIDDLEWARE=================================\\
