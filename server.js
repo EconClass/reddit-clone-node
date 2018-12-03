@@ -33,7 +33,9 @@ require('./data/reddit-db.js');
 //=================================CONTROLLERS=================================\\
 
 // Posts
-require('./controllers/posts.js')(app);
+// require('./controllers/posts.js')(app);
+const posts = require('./controllers/posts.js');
+app.use(posts);
 
 //=================================LISTEN=================================\\
 app.listen(port, () => {
