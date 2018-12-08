@@ -1,4 +1,6 @@
 //=================================INITIAL=================================\\
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -14,6 +16,9 @@ const port = process.env.PORT || 3000;
 const expressValidator = require('express-validator');
 
 //=================================MIDDLEWARE=================================\\
+
+// Cookie Parser
+app.use(cookieParser());
 
 // Handlebars
 app.engine('hbs', exphbs.engine)
@@ -38,6 +43,8 @@ const posts = require('./controllers/posts.js');
 app.use(posts);
 const comments = require('./controllers/comments.js');
 app.use(comments);
+const auth = require('./controllers/auth.js');
+app.use(auth);
 
 //=================================LISTEN=================================\\
 app.listen(port, () => {

@@ -1,4 +1,3 @@
-
 <ul>
     {{#each posts}}
        <div class="card">
@@ -6,7 +5,7 @@
                 <div class="card-title">
                     <a href="/posts/{{this._id}}">{{this.title}}</a>
                 </div>
-                <div class="card-text">{{this.subreddit}}</div>
+                <div class="card-text"><a href="/n/{{this.subreddit}}">{{this.subreddit}}</a></div>
                 <a href="{{this.url}}" target="_blank">{{this.url}}<a>
             </div>
         </div>

@@ -5,7 +5,7 @@
     </div>
 
     <div>
-        <form action="/posts/{{post._id}}" method="post">
+        <form action="/posts/{{post._id}}/comments" method="post">
             <textarea class='form-control' name="content" placeholder="Comment"></textarea>
             <div class="text-right">
                 <button type="submit">Save</button>
@@ -15,7 +15,9 @@
     </div>
 
     <div>
-        
+        {{#each post.comments}}
+            <h3>{{this.content}}</h3>
+        {{/each}}
     </div>
 </div>
 

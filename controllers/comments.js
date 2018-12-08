@@ -4,16 +4,19 @@ const app = express();
 const Comment = require('../models/comment.js');
 
 // CREATE comments
-app.post('/posts/:postId', function(req, res) {
-    let postId = req.params.postId;
-    Post.findById( postId ).then( function(post) {
-        let comment = new Comment(req.body);
-        comment.save(function(err, comment) {
-            return res.redirect(`/posts/${postId}`);
-        }).catch( err => {
-            console.log(err)
+app.post('/posts/:postId/comments', function ( req, res ) {
+    const comment = new Comment(req.body);
+    comment.save()
+        .then(comment => {
+            return Post.findById(req.params.postId);
+        }).then( post => {
+            post.comments.unshift(comment);
+        }).then( post => {
+            res.redirect('/');
+        })
+        .catch( err => {
+            console.log(err);
         });
-    });
 });
 
 module.exports = app;

@@ -7,6 +7,7 @@ const app = express();
 app.get('/', function(req, res) {
     Post.find({}).then(posts => {
         res.render("posts-index.hbs", { posts });
+        console.log(req.cookies);
     }).catch(err => {
         console.log(err.message);
     });
@@ -27,7 +28,7 @@ app.post('/posts', function(req, res) {
 
 // SHOW one Post
 app.get("/posts/:id", function(req, res) {
-    Post.findById( req.params.id ).then(  post => {
+    Post.findById( req.params.id ).populate('comments').then(  post => {
         res.render("posts-show.hbs", { post });
     }).catch(err => {
         console.log(err.message);
