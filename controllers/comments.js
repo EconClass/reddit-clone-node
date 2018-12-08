@@ -1,6 +1,6 @@
-const Post = require('../models/post.js');
 const express = require('express');
 const app = express();
+const Post = require('../models/post.js');
 const Comment = require('../models/comment.js');
 
 // CREATE comments
@@ -11,8 +11,9 @@ app.post('/posts/:postId/comments', function ( req, res ) {
             return Post.findById(req.params.postId);
         }).then( post => {
             post.comments.unshift(comment);
+            return post.save();
         }).then( post => {
-            res.redirect('/');
+            res.redirect(`/posts/${req.params.postId}`);
         })
         .catch( err => {
             console.log(err);

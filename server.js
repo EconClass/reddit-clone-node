@@ -1,4 +1,5 @@
 //=================================INITIAL=================================\\
+require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const express = require('express');
