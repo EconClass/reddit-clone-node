@@ -37,13 +37,12 @@ app.use(methodOverride('_method'));
 require('./data/reddit-db.js');
 
 //=================================CONTROLLERS=================================\\
-
-// Posts
-// require('./controllers/posts.js')(app);
 const posts = require('./controllers/posts.js');
 app.use(posts);
+
 const comments = require('./controllers/comments.js');
 app.use(comments);
+
 const auth = require('./controllers/auth.js');
 app.use(auth);
 
