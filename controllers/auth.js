@@ -12,13 +12,19 @@ app.get('/sign-up', function(req, res) {
 app.post('/sign-up', function(req, res) {
     let user = new User(req.body)
     user.save().then(user => {
-        let token = jwt.sign({ _id: user._id }, process.env.SECRET, { expiresIn: "60 days" });
+        let token = jwt.sign({ _id: user._id, username: user.username, isAdmin: user.isAdmin }, process.env.SECRET, { expiresIn: "60 days" });
         res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
         res.redirect('/');
     }).catch(err => {
         console.log(err);
         return res.status(400).send({ err: err });
     });
+});
+
+// LOGOUT
+app.get('/logout', (req, res) => {
+    res.clearCookie('nToken');
+    res.redirect('/');
 });
 
 // LOGIN FORM
@@ -30,12 +36,10 @@ app.get('/login', function(req, res)  {
 app.post("/login", function(req, res) {
     const username = req.body.username;
     const password = req.body.password;
-    // Find this user name
     User.findOne({ username }, "username password")
     .then(user => {
         if (!user) {
-        // User not found
-        return res.status(401).send({ message: "Wrong Username or Password" });
+            return res.status(401).send({ message: "Wrong Username or Password" });
         }
         // Check the password
         user.comparePassword(password, (err, isMatch) => {
@@ -55,12 +59,6 @@ app.post("/login", function(req, res) {
     .catch(err => {
     console.log(err);
     });
-});
-
-// LOGOUT
-app.get('/logout', function(req, res) {
-    res.clearCookie('nToken');
-    res.redirect('/');
 });
 
 module.exports = app;
