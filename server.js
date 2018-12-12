@@ -47,13 +47,13 @@ require('./controllers/auth.js')(app);
 //=================================CUSTOM_MIDDLEWARE=================================\\
 
 // Authentication
-var checkAuth = (req, res, next) => {
+const checkAuth = (req, res, next) => {
     console.log("Checking authentication");
     if (typeof req.cookies.nToken === "undefined" || req.cookies.nToken === null) {
         req.user = null;
     } else {
-        var token = req.cookies.nToken;
-        var decodedToken = jwt.decode(token, { complete: true }) || {};
+        let token = req.cookies.nToken;
+        let decodedToken = jwt.decode(token, { complete: true }) || {};
         req.user = decodedToken.payload;
     }  
     next();
