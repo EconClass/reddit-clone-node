@@ -1,20 +1,20 @@
 //=================================INITIAL=================================\\
 require('dotenv').config();
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
-const express = require('express');
-const app = express();
-const path = require('path');
-const exphbs = require('express-handlebars').create({
+const cookieParser = require('cookie-parser'),
+    jwt = require('jsonwebtoken'),
+    express = require('express'),
+    app = express(),
+    path = require('path'),
+    exphbs = require('express-handlebars').create({
     layoutsDir: path.join(__dirname, "views/layouts"),
     partialsDir: path.join(__dirname, "views/partials"),
     defaultLayout: 'main',
     extname: 'hbs'
-});
-const methodOverride = require('method-override');
-const bodyParser = require('body-parser');
-const port = process.env.PORT || 3000;
-const expressValidator = require('express-validator');
+    }),
+    methodOverride = require('method-override'),
+    bodyParser = require('body-parser'),
+    port = process.env.PORT || 3000,
+    expressValidator = require('express-validator');
 
 //=================================MIDDLEWARE=================================\\
 
@@ -43,8 +43,10 @@ app.use(posts);
 const comments = require('./controllers/comments.js');
 app.use(comments);
 
-const auth = require('./controllers/auth.js');
-app.use(auth);
+// const auth = require('./controllers/auth.js');
+// app.use(auth);
+require('./controllers/auth.js')(app);
+// auth(app);
 
 //=================================LISTEN=================================\\
 app.listen(port, () => {
