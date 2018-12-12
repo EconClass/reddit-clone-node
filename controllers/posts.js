@@ -1,10 +1,11 @@
-const Post = require('../models/post.js');
+const Post = require('../models/post.js'),
+    User = require('../models/user.js');
 
 module.exports = app => {
     // INDEX
     app.get("/", (req, res) => {
         let currentUser = req.user;
-        console.log(req.cookies)
+        // console.log(req.cookies)
         Post.find()
             .then( posts => {
                 res.render("posts-index.hbs", { posts, currentUser });
@@ -16,30 +17,48 @@ module.exports = app => {
 
     //NEW
     app.get("/posts/new", function(req, res) {
-        let currentUser = req.user;
-        res.render("posts-new.hbs", { posts, currentUser });
+        res.render("posts-new.hbs");
     });
 
     // CREATE
     app.post('/posts', function(req, res) {
-        if( req.user ) {
-            let post = new Post(req.body);
-            post.save ( (err, post) => {
-                return res.redirect(`/`);
-            });
-        } else {
-            return res.status(401); // UNAUTHORIZED
-        };
+        // console.log(req)
+        let post = new Post(req.body);
+        post.author = req.user._id;
+
+        post.save()
+        .then((post)=>{
+            return User.findById(req.user._id);
+        })
+        .then((user)=>{
+            user.posts.unshift(post);
+            user.save();
+            res.redirect('/posts/' + post._id)
+        })
+        .catch((err)=>{
+            console.log(err.message);
+        });
+
     });
 
     // SHOW one Post
     app.get("/posts/:id", function(req, res) {
-        let currentUser = req.user;
-        Post.findById( req.params.id ).populate('comments').then(  post => {
-            res.render("posts-show.hbs", { posts, currentUser });
-        }).catch(err => {
+        Post.findById(req.params.postId)
+        .populate('author', 'username')
+        .populate({
+            path: 'comments',
+            populate: {
+                path: 'author',
+                model: 'User'
+            }
+        })
+        .then((post)=>{
+            // console.log(post);
+            res.render('posts-show', {post: post});
+        })
+        .catch((err)=>{
             console.log(err.message);
-        });
+        })
     });
 
     // SHOW posts with subreddit tags

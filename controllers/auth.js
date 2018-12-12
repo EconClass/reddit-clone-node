@@ -13,7 +13,7 @@ module.exports = app => {
         const user = new User(req.body);
         user.save()
         .then( user => {
-            let token = jwt.sign({ _id: user._id, username: user.username, isAdmin: user.isAdmin }, secret, { expiresIn: "60 days" });
+            let token = jwt.sign({ _id: user._id, username: user.username }, secret, { expiresIn: "60 days" });
             res.cookie('nToken', token, { maxAge: 900000, httpOnly: true });
             res.redirect("/");
         })
@@ -51,6 +51,7 @@ module.exports = app => {
                         // Password does not match
                         return res.status(401).send({ message: "Wrong Username or Password" });
                     };
+                    // console.log(`user is ${user}`);
                     // Create a token
                     const token = jwt.sign({ _id: user._id, username: user.username }, secret, { expiresIn: "60 days" });
 
