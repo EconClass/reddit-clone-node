@@ -2,13 +2,15 @@ const Post = require('../models/post.js');
 
 module.exports = app => {
     // INDEX
-    app.get('/', function(req, res) {
-        Post.find({}).then(posts => {
-            res.render("posts-index.hbs", { posts });
-            console.log(req.cookies);
-        }).catch(err => {
+    app.get("/", (req, res) => {
+        var currentUser = req.user;
+        Post.find({})
+            .then(posts => {
+            res.render("posts-index.hbs", { posts, currentUser });
+            })
+            .catch(err => {
             console.log(err.message);
-        });
+            });
     });
 
     //NEW

@@ -16,6 +16,7 @@ const cookieParser = require('cookie-parser'),
     port = process.env.PORT || 3000,
     expressValidator = require('express-validator');
 
+
 //=================================MIDDLEWARE=================================\\
 
 // Cookie Parser
@@ -36,12 +37,32 @@ app.use(methodOverride('_method'));
 // Set db
 require('./data/reddit-db.js');
 
-//=================================CONTROLLERS=================================\\
+// Controllers
 require('./controllers/posts.js')(app);
 
 require('./controllers/comments.js')(app);
 
 require('./controllers/auth.js')(app);
+
+//=================================CUSTOM_MIDDLEWARE=================================\\
+
+// Authentication
+var checkAuth = (req, res, next) => {
+    console.log("Checking authentication");
+    if (typeof req.cookies.nToken === "undefined" || req.cookies.nToken === null) {
+        req.user = null;
+    } else {
+        var token = req.cookies.nToken;
+        var decodedToken = jwt.decode(token, { complete: true }) || {};
+        req.user = decodedToken.payload;
+    }  
+    next();
+};
+app.use(checkAuth);
+
+// Authorization
+
+
 
 //=================================LISTEN=================================\\
 app.listen(port, () => {
