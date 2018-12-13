@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Comment = require("../models/comment.js");
 
 const PostSchema = new Schema({
     createdAt: { type: Date },
     updatedAt: { type: Date },
     title: { type: String, required: true },
-    author : { type: Schema.Types.ObjectId, ref: "User", required: true },
     url: { type: String, required: true },
     summary: { type: String, required: true },
-    subreddit: { type: String, required: true },
-    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
+    comments: [Comment.schema],
+    subreddit: { type: String, required: true }
 });
 
 PostSchema.pre("save", function(next) {

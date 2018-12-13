@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
-        <a href="{{post.url}}" class="lead">{{post.title}}</a>
-        <h3>{{post.author}}</h3>
+        <a href="{{post.url}}" class="lead">{{post.author}}</a>
+        <h3>{{post.author.username}}</h3>
         <p>{{post.summary}}</p>
     </div>
 </div>
@@ -24,6 +24,18 @@
                 <div class='card-title'>
                     {{this.content}}
                 </div>
+            </div>
+            <form action="/posts/{{post._id}}/comments" method="post">
+            <legend>Comment</legend>
+
+            <div class="form-group">
+                <label for="comment-author">{{this.author}}</label>
+                <input type="hidden" name="author" class="form-control" id="comment-author" value="{{this.author}}">
+            </div>
+
+            <div class="form-group">
+                <label for="comment-content">Content</label>
+                <input type="text" name="content" class="form-control" id="comment-content" placeholder="Comment">
             </div>
         </div>
     {{/each}}
